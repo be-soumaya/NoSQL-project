@@ -6,25 +6,34 @@ from rest_framework import status
 from DjangoApp.models import Article
 from DjangoApp.serializers import ArticleSerializer
 from rest_framework.decorators import api_view
+from pymongo import MongoClient 
+import json
+from bson.json_util import dumps
+from bson.objectid import ObjectId
+client = MongoClient('mongodb+srv://soumaya:soumaya1Atlas@cluster0.y9xab.mongodb.net/test?retryWrites=true&w=majority')
+db = client['DjangoDB']
+collection =  db['NFT_sales']
+
 
 
 @api_view(['GET', 'POST', 'DELETE'])
 def app_list(request):
-    # GET list of tutorials, POST a new tutorial, DELETE all tutorials
     if request.method == 'GET':
-        articles = Article.objects.all()
+        docs=collection.find({"Number_of_Sales": {"$eq": 5}})
+        # articles = Article.objects.all()
         
-        title = request.GET.get('title', None)
-        description = request.GET.get('description',None)
-        published = request.GET.get('published')
-        print("eeeeee",published)
-        if title is not None:
-            articles = articles.filter(title__icontains=title)
-        if description is not None: 
-            articles = articles.filter(description__icontains=description)
+        date = request.GET.get('date', None)
+        # description = request.GET.get('description',None)
+        # published = request.GET.get('published')
+        # print("eeeeee",published)
+        if date is not None:
+            docs = collection.find({"Date": date})
+        # if description is not None: 
+        #     articles = articles.filter(description__icontains=description)
         
-        articles_serializer = ArticleSerializer(articles, many=True)
-        return JsonResponse(articles_serializer.data, safe=False)
+        # articles_serializer = ArticleSerializer(articles, many=True)
+        data = json.loads(dumps(docs)) 
+        return JsonResponse(data, safe=False)
         # 'safe=False' for objects serialization
     elif request.method == 'POST':
         article_data = JSONParser().parse(request)

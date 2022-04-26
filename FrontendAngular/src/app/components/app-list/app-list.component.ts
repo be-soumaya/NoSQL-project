@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Article } from 'src/app/models/article.model';
+import { NFTsales } from 'src/app/models/nftsales.model';
 import { AppserviceService } from 'src/app/services/appservice.service';
 
 @Component({
@@ -9,22 +10,22 @@ import { AppserviceService } from 'src/app/services/appservice.service';
   styleUrls: ['./app-list.component.css']
 })
 export class AppListComponent implements OnInit {
-  articles?: Article[];
-  currentArticle: Article = {};
+  nftsales?: NFTsales[];
+  currentNftSale: NFTsales = {};
   currentIndex = -1;
-  title= '';
+  Date= '';
    
 
   constructor(private appserviceService: AppserviceService) { }
 
   ngOnInit(): void {
-    this.retrieveArticles();
+    this.retrieveNftSales();
   }
 
-  retrieveArticles(): void {
+  retrieveNftSales(): void {
     this.appserviceService.getAll().subscribe(
       (data) => {
-        this.articles = data;
+        this.nftsales = data;
         console.log(data);
       },
       (error) => {
@@ -34,16 +35,16 @@ export class AppListComponent implements OnInit {
   }
 
   refreshList(): void {
-    this.retrieveArticles();
-    this.currentArticle = {};
+    this.retrieveNftSales();
+    this.currentNftSale = {};
     this.currentIndex = -1;
   }
-  setActiveArticle(article: Article, index: number): void {
-    this.currentArticle = article;
+  setActiveNftSale(nftsale: NFTsales, index: number): void {
+    this.currentNftSale = nftsale;
     this.currentIndex = index;
   }
 
-  removeAllArticles(): void {
+  removeAllNftSales(): void {
     this.appserviceService.deleteAll().subscribe(
       (response) => {
         console.log(response);
@@ -55,13 +56,13 @@ export class AppListComponent implements OnInit {
     );
   }
 
-  searchTitle(): void {
-    this.currentArticle = {};
+  searchDate(): void {
+    this.currentNftSale = {};
     this.currentIndex = -1;
 
-    this.appserviceService.findByTitle(this.title).subscribe(
+    this.appserviceService.findByDate(this.Date).subscribe(
       (data) => {
-        this.articles = data;
+        this.nftsales = data;
         console.log(data);
       },
       (error) => {

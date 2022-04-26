@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Article } from '../models/article.model';
+import { NFTsales } from '../models/nftsales.model';
 
 const baseUrl = 'http://localhost:8000/api/apps';
 @Injectable({
@@ -9,8 +10,8 @@ const baseUrl = 'http://localhost:8000/api/apps';
 })
 export class AppserviceService {
   constructor(private http: HttpClient) { }
-  getAll(): Observable<Article[]> {
-    return this.http.get<Article[]>(baseUrl);
+  getAll(): Observable<NFTsales[]> {
+    return this.http.get<NFTsales[]>(baseUrl);
   }
 
   create(data: any): Observable<any> {
@@ -21,7 +22,7 @@ export class AppserviceService {
     return this.http.delete(baseUrl);
   }
   
-  findByTitle(title: any): Observable<Article[]> {
-    return this.http.get<Article[]>(`${baseUrl}?title=${title}`);
+  findByDate(Date: any): Observable<NFTsales[]> {
+    return this.http.get<NFTsales[]>(`${baseUrl}?date=${Date}`);
   }
 }

@@ -1,50 +1,58 @@
 <div class="list row">
     <div class="col-md-8">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Search by title" [(ngModel)]="title" />
+            <input type="text" class="form-control" placeholder="Search by date" [(ngModel)]="Date" />
             <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" (click)="searchTitle()">
+                <button class="btn btn-outline-secondary" type="button" (click)="searchDate()">
                     Search
                 </button>
             </div>
         </div>
     </div>
     <div class="col-md-6">
-        <h4>Articles List</h4>
+        <h4>NFTs Sales List</h4>
         <ul class="list-group">
-            <li class="list-group-item" *ngFor="let article of articles; let i = index"
-                [class.active]="i == currentIndex" (click)="setActiveArticle(article, i)">
-                {{ article.title }}
+            <li class="list-group-item" *ngFor="let nftsale of nftsales; let i = index"
+                [class.active]="i == currentIndex" (click)="setActiveNftSale(nftsale, i)">
+                {{ nftsale.Date }}
             </li>
         </ul>
 
-        <button class="m-3 btn btn-sm btn-danger" (click)="removeAllArticles()">
+        <button class="m-3 btn btn-sm btn-danger" (click)="removeAllNftSales()">
             Remove All
         </button>
     </div>
     <div class="col-md-6">
-        <div *ngIf="currentArticle.id">
-            <h4>Article</h4>
+        <div *ngIf="currentNftSale.Date">
+            <h4>NFT Sale</h4>
             <div>
-                <label><strong>Title:</strong></label> {{ currentArticle.title }}
+                <label><strong>Date:</strong></label> {{ currentNftSale.Date }}
             </div>
             <div>
-                <label><strong>Description:</strong></label>
-                {{ currentArticle.description }}
+                <label><strong>Sales_USD:</strong></label>
+                {{ currentNftSale.Sales_USD }}
             </div>
             <div>
-                <label><strong>Status:</strong></label>
-                {{ currentArticle.published ? "Published" : "Pending" }}
+                <label><strong>Number_of_Sales:</strong></label>
+                {{ currentNftSale.Number_of_Sales }}
+            </div>
+            <div>
+                <label><strong>Active_Market_Wallets:</strong></label>
+                {{ currentNftSale.Active_Market_Wallets }}
+            </div>
+            <div>
+                <label><strong>Primary_Sales:</strong></label>
+                {{ currentNftSale.Primary_Sales }}
             </div>
 
-            <a class="badge badge-warning" routerLink="/articles/{{ currentArticle.id }}">
+            <a class="badge badge-warning" routerLink="/articles/{{ currentNftSale.Date }}">
                 Edit
             </a>
         </div>
 
-        <div *ngIf="!currentArticle">
+        <div *ngIf="!currentNftSale">
             <br />
-            <p>Please click on a Article...</p>
+            <p>Please click on a NFT sale...</p>
         </div>
     </div>
 </div>
